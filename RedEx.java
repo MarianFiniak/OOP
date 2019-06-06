@@ -3,7 +3,7 @@ import java.util.regex.Pattern;
 
 public class RedEx {
     public String time(String s){
-        Pattern pattern = Pattern.compile("^(([0-1]{1}[0-9])|([2]{1}[0-3]{1})):([0-5]{1}[0-9]{1})$");
+        Pattern pattern = Pattern.compile("^(([1]{1}[0-9])|([2]{1}[0-3]{1})|([0-9]{1})):([0-5]{1}[0-9]{1})$");
         Matcher matcher = pattern.matcher(s);
         if (matcher.find()){
             return s;
@@ -14,7 +14,7 @@ public class RedEx {
     }
 
     public String station(String s){
-        Pattern pattern = Pattern.compile("^[А-Я]{1}[а-я]{1,20}$");
+        Pattern pattern = Pattern.compile("^[а-я]{1,21}$");
         Matcher matcher = pattern.matcher(s);
         if (matcher.find()){
             return s;
@@ -45,7 +45,7 @@ public class RedEx {
 
     }
     public String nameF(String s){
-        Pattern pattern = Pattern.compile("^[№]{1}[0-9]{5}$");
+        Pattern pattern = Pattern.compile("^[0-9]{5}$");
         Matcher matcher = pattern.matcher(s);
         if(matcher.matches()){
             return s;

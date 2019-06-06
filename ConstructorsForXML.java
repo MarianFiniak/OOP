@@ -115,17 +115,16 @@ public class ConstructorsForXML {
             Document doc = dBuilder.parse(fXmlFile);
             doc.getDocumentElement().normalize();
 
-            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+
             NodeList nList = doc.getElementsByTagName("Staff");
-            System.out.println("----------------------------");
+
             for (int temp = 0; temp < nList.getLength(); temp++) {
                 Node nNode = nList.item(temp);
-                System.out.println("\nCurrent Element :" + nNode.getNodeName());
+
                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
                     Element eElement = (Element) nNode;
-                    System.out.println("Staff id : "
-                            + eElement.getAttribute("id"));
+
 
                     lines.add(eElement.getElementsByTagName("numberFlight").item(0).getTextContent());
                     lines.add(eElement.getElementsByTagName("Date").item(0).getTextContent());
@@ -138,7 +137,7 @@ public class ConstructorsForXML {
                        lines.add(eElement.getElementsByTagName("Departure").item(i).getTextContent());
                        lines.add(eElement.getElementsByTagName("FreeSeat").item(i).getTextContent());
                    }
-                   System.out.println("Count////////////////  "+N);
+
                    Demain demain = new Demain(lines,N);
                    demains.add(demain);
                    lines.clear();

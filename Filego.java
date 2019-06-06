@@ -7,12 +7,24 @@ public class Filego  {
         String s2 = "";
         Filego main = new Filego();
         Scanner in = new Scanner(System.in);
-        String s = "C://";
+        String s = "E://";
         String s1;
         while (true) {
             File dir = new File(s);
+            // если объект представляет каталог
+            if (dir.isDirectory()) {
+                // получаем все вложенные объекты в каталоге
+                for (File item : dir.listFiles()) {
 
+                    if (item.isDirectory()) {
 
+                        System.out.println( item.getName() +  "  \t (folder)");
+                    } else {
+
+                        System.out.println( item.getName() +  "\t (file)");
+                    }
+                }
+            }
             s1 = in.nextLine();
             if(s1.equals("..")){
                 char[] c = s.toCharArray();
