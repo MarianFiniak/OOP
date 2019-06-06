@@ -11,13 +11,17 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 
 public class ConstructorsForXML {
 
 
-    public void WriteParamXML(ArrayList<Demain> arrayList, String FILENAME) throws TransformerException, IOException {
+
+
+    /**
+     * Запись настроек в XML файл
+     */
+    public void WriteParamXML(Simple<Demain> arrayList,String FILENAME) throws TransformerException, IOException {
         try
         {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -101,9 +105,9 @@ public class ConstructorsForXML {
             tfe.printStackTrace();
         }
     }
-    public ArrayList<Demain> read(String FILENAME) throws ParserConfigurationException, IOException, SAXException {
-        ArrayList<Demain> demains = new ArrayList<>();
-        ArrayList<String> lines = new ArrayList<>();
+    public Simple<Demain> read(String FILENAME) throws ParserConfigurationException, IOException, SAXException {
+        Simple<Demain> demains = new SimpleArray<>();
+        Simple<String> lines = new SimpleArray<>();
         try {
             File fXmlFile = new File(FILENAME);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();

@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Filego  {
     public String doFile() {
-
+// определяем объект для каталога
         String s2 = "";
         Filego main = new Filego();
         Scanner in = new Scanner(System.in);
@@ -12,19 +12,7 @@ public class Filego  {
         while (true) {
             File dir = new File(s);
 
-            if (dir.isDirectory()) {
 
-                for (File item : dir.listFiles()) {
-
-                    if (item.isDirectory()) {
-
-                        System.out.println( item.getName() + "  \t (folder)");
-                    } else {
-
-                        System.out.println(item.getName()  + "\t (file)");
-                    }
-                }
-            }
             s1 = in.nextLine();
             if(s1.equals("..")){
                 char[] c = s.toCharArray();

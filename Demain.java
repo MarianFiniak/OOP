@@ -11,6 +11,8 @@ public class Demain implements Serializable {
     private String numberOfSeats;
     private String date;
     private String numberFlight;
+    RedEx redEx = new RedEx();
+    String s;
 
 
     public Demain() throws IOException
@@ -38,7 +40,7 @@ public class Demain implements Serializable {
 
 
     public  Demain(Simple<String> lines,int k) throws IOException {
-
+        //System.out.println(i);
 
         setNumberFlight(lines.get(0));
 
@@ -59,21 +61,40 @@ public class Demain implements Serializable {
         return numberOfSeats;
     }
     public void setNumberOfSeats(String places){
-        numberOfSeats=places;
+        s=redEx.seat(places);
+        if (s.equals(places)) {
+            numberOfSeats = places;
+        }else {
+            System.out.println("Error");
+            numberOfSeats =s;
+        }
     }
 
     public String getDate(){
         return date;
     }
     public void setDate(String date){
-        this.date = date;
+        s=redEx.date(date);
+        if (s.equals(date)){
+            this.date=date;
+        }else {
+            System.out.println("Error");
+            this.date=s;
+        }
     }
 
     public String getNumberFlight(){
         return numberFlight;
     }
     public void setNumberFlight(String numberFlight){
-        this.numberFlight=numberFlight;
+        s=redEx.nameF(numberFlight);
+        if (s.equals(numberFlight)){
+            this.numberFlight=numberFlight;
+        }else {
+            System.out.println("Error");
+            this.numberFlight=s;
+        }
+
     }
 
 

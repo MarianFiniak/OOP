@@ -75,7 +75,8 @@ public class Main {
                     if (s3.equals("Т")) {
                         FILENAME = file.doFile();
                     }
-
+                    System.out.print("Дивитися з файлу .xml чи .out(1/2): ");
+                    s3=in.nextLine();
                     Simple<Demain> train2 = new SimpleArray<>();
                     if(s3.equals("1")) {
                         train2.clear();

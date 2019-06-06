@@ -7,6 +7,8 @@ public class Station implements Serializable {
     private String dateArrival;
     private String dateDeparture;
     private String freeSeat;
+    RedEx redEx = new RedEx();
+    String s;
     public Station() throws IOException {
         Scanner in = new Scanner(System.in);
         System.out.println("Введіть назву "  + " станції: ");
@@ -45,8 +47,39 @@ public class Station implements Serializable {
     }
     public String getFreeSeat(){return freeSeat;}
 
-    public void setNameStation(String nameStation){this.nameStation= nameStation;}
-    public void setDateArrival(String dateArrival){this.dateArrival=dateArrival;}
-    public void setDateDeparture(String dateDeparture){this.dateDeparture=dateDeparture;}
-    public void setFreeSeat(String freeSeat){this.freeSeat=freeSeat;}
+    public void setNameStation(String nameStation){
+        s=redEx.station(nameStation);
+        if (s.equals(nameStation)){
+            this.nameStation=nameStation;
+        }else {
+            System.out.println("Error");
+            this.nameStation=s;
+        }
+    }
+    public void setDateArrival(String dateArrival){
+        s=redEx.time(dateArrival);
+        if (s.equals(dateArrival)){
+            this.dateArrival=dateArrival;
+        }else {
+            System.out.println("Error");
+            this.dateArrival=s;
+        }
+    }
+    public void setDateDeparture(String dateDeparture){
+        s=redEx.time(dateDeparture);
+        if (s.equals(dateDeparture)){
+            this.dateDeparture=dateDeparture;
+        }else {
+            System.out.println("Error");
+            this.dateDeparture=s;
+        }
+    }
+    public void setFreeSeat(String freeSeat){
+        s=redEx.seat(freeSeat);
+        if (s.equals(freeSeat)){
+            this.freeSeat=freeSeat;
+        }else {
+            System.out.println("Error");
+            this.freeSeat=s;
+        }}
 }
