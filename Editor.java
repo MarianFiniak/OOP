@@ -1,4 +1,5 @@
-package demo;
+package com.company;
+
 
 public class Editor
 {
