@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Filego  {
@@ -18,10 +19,10 @@ public class Filego  {
 
                     if (item.isDirectory()) {
 
-                        System.out.println( item.getName() +  "  \t (folder)");
+                        System.out.println( item.getName() + "  \t (folder)");
                     } else {
 
-                        System.out.println( item.getName() +  "\t (file)");
+                        System.out.println( item.getName() + "\t (file)");
                     }
                 }
             }
@@ -61,7 +62,7 @@ public class Filego  {
         }
 
     }
-    public String[] make_info(Simple<Demain> demains){
+    public String[] make_info(ArrayList<Demain> demains){
         String[] strings = new String[demains.size()];
         for (int i=0;i<demains.size();i++){
             strings[i] = "Назва рейсу: " +demains.get(i).getNumberFlight()+"\nДата прибуття: "+demains.get(i).getDate()+"\nКількість місць: "+demains.get(i).getNumberOfSeats()+"\n";

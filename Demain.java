@@ -1,11 +1,11 @@
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Random;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 @XmlRootElement
-public class Demain implements Serializable {
+public class Demain implements Serializable,Comparable<Demain> {
     int M;
     int N;
     Simple<Station> route = new SimpleArray<>();
@@ -14,41 +14,15 @@ public class Demain implements Serializable {
     private String numberFlight;
     RedEx redEx = new RedEx();
     String s;
-    Random r = new Random();
 
 
     public Demain() throws IOException
 
     {
-        //Station s2;
+        Station s2;
         Scanner in =new Scanner(System.in);
         System.out.println("Введіть номер рейсу " + " : ");
-        String number = String.valueOf(r.nextInt(99999-10000)+10000);
-        System.out.println(number);
-        setNumberFlight(number);
-        System.out.println("Введіть дату прибуття: ");
-        String date = String.valueOf(r.nextInt(999999-100000)+100000);
-        System.out.println(date);
-        setDate(date);
-        System.out.println("Введіть кількість місць");
-        String places = String.valueOf(r.nextInt(9999-1000)+1000);
-        System.out.println(places);
-        setNumberOfSeats(places);
-        System.out.println("Введіть кіскість зупинок(включно з початкової і кінцевої): ");
-        N = r.nextInt(10-2)+2;
-        for (int i = 0; i < N; i++) {
-            Station station = new Station();
-            route.add(station);
-        }
-    }
-
-    public Demain(String s) throws IOException
-
-    {
-        //Station s2;
-        Scanner in =new Scanner(System.in);
-        System.out.println("Введіть номер рейсу " + " : ");
-        String number =in.nextLine();
+        String number = in.nextLine();
         setNumberFlight(number);
         System.out.println("Введіть дату прибуття: ");
         String date = in.nextLine();
@@ -59,14 +33,14 @@ public class Demain implements Serializable {
         System.out.println("Введіть кіскість зупинок(включно з початкової і кінцевої): ");
         N = in.nextInt();
         for (int i = 0; i < N; i++) {
-            Station station = new Station("");
+            Station station = new Station();
             route.add(station);
         }
     }
 
 
 
-    public  Demain(Simple<String> lines,int k) throws IOException {
+    public  Demain(ArrayList<String> lines, int k) throws IOException {
         //System.out.println(i);
 
         setNumberFlight(lines.get(0));
@@ -82,6 +56,7 @@ public class Demain implements Serializable {
             i += 4;
         }
     }
+
 
 
     public String getNumberOfSeats() {
@@ -101,23 +76,28 @@ public class Demain implements Serializable {
         return date;
     }
     public void setDate(String date){
+        s=redEx.date(date);
+        if (s.equals(date)){
             this.date=date;
-
+        }else {
+            System.out.println("Error");
+            this.date=s;
+        }
     }
 
     public String getNumberFlight(){
         return numberFlight;
     }
     public void setNumberFlight(String numberFlight){
-        s=redEx.nameF(numberFlight);
-        if (s.equals(numberFlight)){
             this.numberFlight=numberFlight;
-        }else {
-            System.out.println("Error");
-            this.numberFlight=s;
-        }
 
     }
 
 
+    @Override
+    public int compareTo(Demain o) {
+        int number0= Integer.parseInt(this.getNumberFlight());
+        int number1 = Integer.parseInt(o.getNumberFlight());
+        return number0<number1?-1: (number0>number1)?1:0;
+    }
 }
