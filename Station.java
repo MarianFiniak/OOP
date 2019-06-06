@@ -1,8 +1,8 @@
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class Station {
+public class Station implements Serializable {
     private String nameStation;
     private String dateArrival;
     private String dateDeparture;
@@ -22,7 +22,7 @@ public class Station {
         String freePlaces = in.nextLine();
         setFreeSeat(freePlaces);
     }
-    public Station(ArrayList<String> lines,int i){
+    public Station(Simple<String> lines,int i){
 
             setNameStation(lines.get(i));
             i++;
@@ -31,7 +31,6 @@ public class Station {
             setDateDeparture(lines.get(i));
             i++;
             setFreeSeat(lines.get(i));
-            i++;
 
     }
 

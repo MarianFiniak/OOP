@@ -1,22 +1,21 @@
 import javax.xml.bind.annotation.XmlRootElement;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Scanner;
 
 @XmlRootElement
-public class Demain {
+public class Demain implements Serializable {
     int M;
     int N;
-    static int i=1;
-    ArrayList<Station> route = new ArrayList<Station>();
+    Simple<Station> route = new SimpleArray<>();
     private String numberOfSeats;
     private String date;
     private String numberFlight;
-    FileWriter nFile = new FileWriter("file1.txt");
 
 
-    public Demain() throws IOException {
+    public Demain() throws IOException
+
+    {
         Station s2;
         Scanner in =new Scanner(System.in);
         System.out.println("Введіть номер рейсу " + " : ");
@@ -38,24 +37,22 @@ public class Demain {
 
 
 
-    public  Demain(ArrayList<String> lines) throws IOException {
-        System.out.println(i);
-            setNumberFlight(lines.get(i));
-            i++;
-            setDate(lines.get(i));
-            i++;
-            setNumberOfSeats(lines.get(i));
-            i++;
-            N= Integer.parseInt(lines.get(i));
-            i++;
-            for (int j = 0;j<N;j++){
-                Station station = new Station(lines,i);
-                route.add(station);
-                i+=4;
-            }
+    public  Demain(Simple<String> lines,int k) throws IOException {
 
+
+        setNumberFlight(lines.get(0));
+
+        setDate(lines.get(1));
+        setNumberOfSeats(lines.get(2));
+        this.N = k;
+        int i =4;
+        for (int j = 0; j < N; j++) {
+
+            Station station = new Station(lines, i);
+            route.add(station);
+            i += 4;
+        }
     }
-
 
 
     public String getNumberOfSeats() {

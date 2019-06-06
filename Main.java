@@ -1,56 +1,152 @@
-import java.io.IOException;
-import java.util.ArrayList;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import java.io.*;
 import java.util.Scanner;
 
 public class Main {
-
-    public static void main(String[] args) throws IOException {
+    //static int i = 0;
+    public static void main(String[] args) throws IOException, TransformerException, ParserConfigurationException, SAXException, ClassNotFoundException {
+        ConstructorsForXML constructorsForXML = new ConstructorsForXML();
         Scanner in = new Scanner(System.in);
-        String FILENAME="file1.txt";
-        System.out.println("Записати(1) чи переглянути(2) інформацію?");
-        String s4=in.nextLine();
-        ArrayList<Demain> train = new ArrayList<Demain>();
-        if (s4.equals("1")) {
-            System.out.println("Введіть кількість маршрутів: ");
-            int M = in.nextInt();
+        String FILENAME = "file1.xml";
+        String s4 ;
 
+        Simple<Demain> train = new SimpleArray<>();
 
-            for (int k = 0; k < M; k++) {
-                Demain demain = new Demain();
-                train.add(demain);
+        Filego file = new Filego();
+        String s3;
+        int M=0;
 
-            }
-            System.out.println("Зберегти файл?(так/ні):");
-            in.nextLine();
-            String s3 = in.nextLine();
-            if (s3.equals("так")) {
-                System.out.println("Ви хочете вибрати файл?(так/ні):");
-                s3 = in.nextLine();
-                FileGo file = new FileGo();
-                if (s3.equals("так")) {
-                    FILENAME = file.doFile();
+        if (args.length > 0) {
+            if (args[0].equals("-auto")) {
+                train = constructorsForXML.read("file.xml");
+                String[] strings = file.make_info(train);
+                for (String s : strings) {
+                    System.out.println(s);
                 }
-                Save save=new Save();
-                save.save(train,M,FILENAME);
-
             }
-        }
-        if (s4.equals("2")) {
-            System.out.println("Ви хочете вибрати файл?(так/ні):");
-            String s3 = in.nextLine();
-            FileGo file = new FileGo();
-            if (s3.equals("так")) {
-                FILENAME = file.doFile();
-            }
-            Save sava = new Save();
-            train = sava.resave(FILENAME);
-            String[] strings;
-            FileGo make_info=new FileGo();
-            strings = make_info.make_info(train);
-            for (int i = 0;i<train.size();i++)
-                System.out.print(strings[i]);
-        }
+        } else {
+            do {
+                System.out.println("*Записати нову інформацію (1)\n" +
+                        "*Добавити інформацію (2) \n" +
+                        "*Переглянути (3)\n" +
+                        "*Зберегти (4)\n" +
+                        "*Видалити (5)\n" +
+                        "*Вийти (6)");
+                System.out.print("Ваша команда : ");
+                s4 = in.nextLine();
+                System.out.println();
+                if (s4.equals("1")) {
+                    System.out.println("Введіть кількість маршрутів: ");
+                    M = in.nextInt();
+                    for (int k = 0; k < M; k++) {
+                        Demain demain = new Demain();
+                        train.add(demain);
 
+                    }
+
+                }
+                if (s4.equals("2")) {
+                    System.out.println("Ви хочете вибрати файл, куди добавити інформації?(Т/Н):");
+                    s3 = in.nextLine();
+                    if (s3.equals("Т")) {
+                        FILENAME = file.doFile();
+                    }
+                    train.clear();
+                    train = constructorsForXML.read(FILENAME);
+
+                    System.out.println("Введіть кількість маршрутів: ");
+                    int K = in.nextInt();
+
+
+                    for (int k = 0; k < K; k++) {
+                        Demain demain = new Demain();
+                        train.add(demain);
+                        M++;
+                    }
+                }
+                if (s4.equals("3")) {
+
+                    System.out.println("Ви хочете вибрати файл, звідки будете дивитися інформацію?(Т/Н):");
+                    s3 = in.nextLine();
+
+                    if (s3.equals("Т")) {
+                        FILENAME = file.doFile();
+                    }
+
+                    Simple<Demain> train2 = new SimpleArray<>();
+                    if(s3.equals("1")) {
+                        train2.clear();
+                        train2 = constructorsForXML.read(FILENAME);
+                    }
+                    else {
+                        FileInputStream fis = new FileInputStream("temp.out");
+                        ObjectInputStream oin = new ObjectInputStream(fis);
+                        train2 = (Simple<Demain>) oin.readObject();
+                    }
+                   // System.out.println(train2.get(0).getNumberFlight());
+                    String[] strings = file.make_info(train2);
+                    for (String s : strings) {
+                        System.out.println(s);
+                    }
+                    //System.out.println(train2.size());
+
+                }
+                if (s4.equals("4")) {
+                        System.out.println("Ви хочете вибрати файл?(Т/Н):");
+                        s3 = in.nextLine();
+                        if (s3.equals("Т")) {
+                            FILENAME = file.doFile();
+                        }
+                    System.out.print("Зберегти в .xml чи .out файл?(1/2): ");
+                        s3=in.nextLine();
+                        if (s3.equals("1")) {
+                            constructorsForXML.WriteParamXML(train, FILENAME);
+                        }
+                        else {
+                            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("temp.out"));
+                            oos.writeObject(train);
+                            oos.flush();
+                            oos.close();
+                        }
+                }
+                if (s4.equals("5")) {
+                    System.out.print("Видалити інформацію з файлу чи з контейнера?(ф/к): ");
+                    s3 = in.nextLine();
+                    if (s3.equals("ф")) {
+                        System.out.println("Ви хочете вибрати файл?(Т/Н):");
+                        s3 = in.nextLine();
+                        if (s3.equals("Т")) {
+                            FILENAME = file.doFile();
+                        }
+                        System.out.print("Файл .xml чи .out?(1/2): ");
+                        s3=in.nextLine();
+                        if (s3.equals("1")) {
+                            train = constructorsForXML.read(FILENAME);
+                        }
+                        else {
+                            FileInputStream fis = new FileInputStream("temp.out");
+                            ObjectInputStream oin = new ObjectInputStream(fis);
+                            train = (Simple<Demain>) oin.readObject();
+                        }
+                    }
+                    System.out.println("Видалити всю інформацію?(Т/Н): ");
+                    s3 = in.nextLine();
+                    if (s3.equals("Т")) {
+                        train.clear();
+                        M=0;
+                    } else {
+                        System.out.print("Введіть індекс елемента який ви хочете видалити: ");
+                        int i = in.nextInt();
+                        train.delete(i);
+                        M--;
+                    }
+                }
+
+            } while (!s4.equals("6"));
+        }
     }
 }
 
